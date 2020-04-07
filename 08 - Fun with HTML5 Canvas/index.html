@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+
+  // Grabs the canvas
+  const canvas = document.querySelector('#draw');
+  
+  // Grabs the context
+  const context = canvas.getContext('2d');
+
+  // Sizes up the canvas to be the exact height and width of the window
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  // Styles the line cap and the line join to set the properties of how the line is drawn
+  context.strokeStyle = '#BADA55';
+  context.lineJoin = 'round';
+  context.lineCap = 'round';
+
+  // Sets the thickness of the line to be drawn
+  context.lineWidth = 100;
+
+  // A PhotoShop thing that I'm not quite familiar with that blends colors together, eventually to black
+  // context.globalCompositeOperation = 'multiply';
+
+  // Set a flag to tell the computer whether or not it should actually draw stuff on the canvas
+  let isDrawing = false;
+
+  // Set the coordinates for the line to end at
+  let lastX = 0;
+  let lastY = 0;
+
+  // Initiates the hue at 0
+  let hue = 0;
+
+  let direction = true;
+
+  function draw(event) {
+    if (!isDrawing) return; // Stops the functions from running when the user is NOT moused down
+    console.log(event);
+    context.strokeStyle = `hsl(${hue}, 100%, 50%)`; // (HSL variable, saturation, lightness)
+    context.beginPath();
+
+    // Start from...
+    context.moveTo(lastX, lastY);
+    // Go to...
+    context.lineTo(event.offsetX, event.offsetY);
+
+    context.stroke();
+    lastX = event.offsetX;
+    lastY = event.offSetY;
+    // Iterates through the available hues from the HSL specification, i.e. changes the color of the line 
+    hue++;
+
+    // Technically unnecessary, but resets the hue at 0 if it exceeds 360.
+    if (hue >= 360) {
+      hue = 0;
+    }
+
+    // Flips the direction to make the line width smaller or larger based on the current hue
+    if (context.lineWidth >= 100 || context.lineWidth <= 1) {
+      direction = !direction;
+    }
+    if (direction) {
+      // 0 to 100
+      context.lineWidth++;
+    } else {
+      // 100 to 0
+      context.lineWidth--;
+    }
+  }
+
+  // Listens for the 'mousemove' event on the canvas and draws whenever the mouse is moved
+  canvas.addEventListener('mousemove', draw);
+
+  canvas.addEventListener('mousedown', (event) => {
+    isDrawing = true;
+    lastX = event.offsetX;
+    lastY = event.offsetY;
+  });
+
+  canvas.addEventListener('mouseup', () => isDrawing = false);
+
+  // Accounts for when the cursor moves outside the window
+  canvas.addEventListener('mouseout', () => isDrawing = false);
+
+</script>
+
+<style>
+  html, body {
+    margin: 0;
+  }
+</style>
+
+</body>
+</html>
