@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    // Whenever a paragraph is clicked, this function turns the text color to green.
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+    console.log("Hello, World!");
+
+    // Interpolated (ES6 backticks take the place of this now)
+    console.log('Hello, I am a %s string!', 'super'); // prints out "Hello, I am a super string!"
+
+    // Styled // styles the output in the log
+    console.log('%c I am some styled text', 'font-size: 50px, background: red; text-shadow: 10px 10px 0 blue');
+
+    // warning! // provides the yellow warning symbol next to the message in the log
+    console.warn('Oh, dear');
+
+    // Error :| // provides the red error symbol next to the message in the log
+    console.error('Error!');
+
+    // Info // displays the purple info circle next to the message in the log
+    console.info('The highest geographical point in Pennsylvania is Mt. Davis');
+
+    // Testing
+    const p = document.querySelector('p');
+    console.assert(p.classList.contains('ouch'), 'That is wrong!') // If the classlist DOESN'T contain 'ouch!', then the 'That is wrong!' message will print to the log
+
+    // clearing // clears the console
+    console.clear();
+
+    // Viewing DOM Elements
+    console.log(p); // prints out the element to the log
+    console.dir(p); // prints out the class list, properties, methods, etc., of the element to the log
+
+    // Grouping together
+    dogs.forEach(dog => {
+      console.group(`${dog.name}`); // prints out the properties of each dog as a group under each dog name
+        console.log(`This is ${dog.name}.`);
+        console.log(`${dog.name} is ${dog.age} years old.`);
+        console.log(`That is ${dog.age * 7} in dog years.`);
+      console.groupEnd(`${dog.name}`);
+
+      console.groupCollapsed(`${dog.name}`); // prints out the properties of each dog as a collapsed group under each dog name
+        console.log(`This is ${dog.name}.`);
+        console.log(`${dog.name} is ${dog.age} years old.`);
+        console.log(`That is ${dog.age * 7} in dog years.`);
+      console.groupEnd(`${dog.name}`);
+    });
+
+    // counting // counts however many times you use a specific word, object, DOM node, etc.
+    console.count('dog');
+
+    // timing // prints out to the log how long it took to do a specific task
+    console.time('fetching data');
+      // task to run
+    console.timeEnd('fetching data');
+
+    // table // displays an array of objects into a neat table in the log, assuming each object has the same properties
+
+  </script>
+</body>
+</html>
