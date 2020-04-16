@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+<script>
+
+  const pressedKeys =[];
+  // The secret "KONOMI" code
+  const secretCode = 'secretcode';
+
+  // Listens for the "keyup" event
+  window.addEventListener('keyup', (event) => {
+
+    // Tells us the key that was pressed
+    console.log(event.key);
+    pressedKeys.push(event.key);
+    
+    // Keeps the pushedKeys array the exact length of secretCode
+    pressedKeys.splice(-secretCode.length - 1, pressedKeys.length - secretCode.length);
+
+    // Checks to see if pressedKeys contains secretCode
+    if (pressedKeys.join('').includes(secretCode)) {
+      console.log("You guessed the secret code!!!")
+
+      // Unicorn city.
+      cornify_add();
+    }
+
+    //console.log(pressedKeys);
+
+  });
+</script>
+</body>
+</html>
